@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nursing@Penn</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <% if @current_user %>
+    <div class='pull-right'>
+      Signed in as <u><%= @current_user.email %></u>
+    </div>
+     <%= link_to "Logout", end_session_path %>
+    <% end %>
+	<%= yield %>
+  <div>
+
+  <%= yield :page_specific_javascript %>
+</body>
+</html>

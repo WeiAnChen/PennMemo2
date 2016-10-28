@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<div class="inbox-container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<h1 class="page-title">Inbox</h1>
+		<hr>
+		</div>
+	</div>
+
+	<% @announcements.reverse_each do |announcement| %>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<% if announcement.priority == 1 %>
+					<%= link_to(announcement, :class => "thumbnail no-link-bg no-link-dec high-priority-thumb") do %>
+						<div class="caption">
+							<p class="card-priority-high">High Priority</p>
+							<% unless @announcement_categories[announcement.id].nil? %>
+								<div class="tag-holder">
+									<img src='/tag.png' height="20px" width="20px">
+									<span class="tags"><%= @announcement_categories[announcement.id] %></span>
+								</div>
+							<% end %>
+							<h3 class="card-subject"><%= announcement.subject %></h3>
+							<p class="card-needToKnow"><%=raw announcement.needToKnow %></p>
+						</div>
+					<% end %>
+				<% else %>
+					<%= link_to(announcement, :class => "thumbnail no-link-bg no-link-dec") do %>
+						<div class="caption">
+							<% unless @announcement_categories[announcement.id].nil? %>
+								<div class="tag-holder">
+									<img src='/tag.png' height="20px" width="20px">
+									<span class="tags"><%= @announcement_categories[announcement.id] %></span>
+								</div>
+							<% end %> 
+							<h3 class="card-subject"><%= announcement.subject %></h3>
+							<p class="card-needToKnow"><%=raw announcement.needToKnow %></p>
+						</div>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	<% end %>
+	<br>
+</div>

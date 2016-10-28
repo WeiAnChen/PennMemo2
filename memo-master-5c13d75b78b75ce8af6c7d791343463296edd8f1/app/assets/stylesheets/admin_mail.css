@@ -1,0 +1,131 @@
+body {
+	background: #fafafa;
+}
+
+.header {
+	text-align: center;
+}
+
+.page-title {
+	font-family: "Lucide Grande";
+	font-weight: 700;
+	font-style: normal;
+	font-size: 36px;
+	line-height: 1.15;
+	color: rgba(0,0,0,.8);
+}
+
+.card-subject {
+	font-family: "Lucida Grande";
+	font-weight: 600;
+	font-style: normal;
+	font-size: 28px;
+	line-height: 1.1;
+	color: rgba(0,0,0,.8);
+	margin-top: 0px;
+}
+
+.card-priority-high {
+	font-family: "Lucida Grande";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 14px;
+	color: rgba(255,0,0,.4);
+}
+
+.card-priority-low {
+	font-family: "Lucida Grande";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 14px;
+	color: rgba(0,0,0,.4);
+}
+
+.card-needToKnow {
+	font-family: "Lucida Grande";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 22px;
+	color: rgba(0,0,0,.6);
+}
+
+.card-readmore {
+	font-family: "Lucida Grande";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 12px;
+	color: rgba(0,0,0,.3);
+}
+
+.links-nav {
+	text-align: center;
+}
+
+.priority {
+	text-align: left;
+}
+
+.categoryTagsLabel {
+	text-align: left;
+}
+
+.no-margin.form-group {
+	margin-bottom: 0px;
+}
+
+.categoryTags {
+	text-align: left;
+}
+
+a.no-link-bg {
+	background-color: transparent;
+	text-decoration: none;
+}
+
+a:hover.no-link-bg {
+	background-color: transparent;
+}
+
+a:hover.no-link-dec {
+	text-decoration: none;
+}
+
+a:link.no-link-dec {
+	background-color: transparent;
+	text-decoration: none;
+}
+
+.announcement-subject {
+	padding-top: 25px;
+}
+
+.announcement-section {
+	font-family: "Georgia";
+	font-weight: 300;
+	font-style: normal;
+	font-size: 28px;
+	line-height: 1.22;
+	color: rgba(0,0,0,.45);
+}
+
+.announcement-text {
+	display: block;
+	font-family: "Georgia";
+	font-weight: 400;
+	font-style: normal;
+	font-size: 20px;
+	line-height: 1.6;
+	color: rgba(0,0,0,.7);
+}
+
+.tags {
+	color: gray;
+}
+
+.tag-holder {
+	margin-bottom: 15px;
+}
+
+.high-priority-thumb {
+	border: 1px solid rgba(255,0,0,.6) !important;
+}

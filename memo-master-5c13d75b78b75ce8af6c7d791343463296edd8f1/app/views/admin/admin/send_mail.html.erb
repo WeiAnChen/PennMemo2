@@ -1,0 +1,216 @@
+<div class="announcement-container">
+  <div id="success-msg" class="navbar-fixed-top hide alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Awesome!</strong> The announcement has been submitted.
+  </div>
+  <div id="failure-msg" class="navbar-fixed-top hide alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Uh oh!</strong> There was an error submitting the announcement.
+  </div>
+  <div id="bad-input-msg" class="navbar-fixed-top hide alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Uh oh!</strong> An announcement requires a subject, priority, and need to know.
+  </div>
+  <div class="header">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h1 class="page-title">Send an announcement</h1>
+        <hr>
+      </div>
+    </div>
+  </div>
+  <div class="form-wrapper">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="announceSubject">Subject <strong style="color: red;">*</strong></label>
+          <input type="text" class="form-control" id="announceSubject" placeholder="Subject">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="announceAuthor">Author or team name</label>
+          <input type="text" class="form-control" id="announceAuthor" placeholder="Who to display as the author">
+        </div>
+      </div>
+    </div>
+    <div class="row priority">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="priorityLevel">Priority <strong style="color: red;">*</strong></label>
+          <br>
+          <label class="radio-inline">
+            <input type="radio" name="priorityLevel" class="priorityScore" value="1"> High
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="priorityLevel" class="priorityScore" value="0" checked> Low
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row categoryTagsLabel">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group no-margin">
+          <label for="categoryTags">Tags</label>
+          <br>
+        </div>
+      </div>
+    </div>
+    <div class="row categoryTags">
+      <div class="col-md-3 col-md-offset-3">
+        <div class="form-group">
+          <% @categories_first.each do |category| %>
+            <div class="checkbox">
+              <label>
+                <%= check_box_tag "categories[]", category.id, false, :id => "categories_#{category.id}", :class => "categoriesChk" %>
+                <%= category.name %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <% @categories_second.each do |category| %>
+            <div class="checkbox">
+              <label>
+                <%= check_box_tag "categories[]", category.id, false, :id => "categories_#{category.id}", :class => "categoriesChk" %>
+                <%= category.name %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="announceMessageNeedToKnow">Need To Know <strong style="color: red;">*</strong></label>
+          <br>
+          <textarea class="form-control" id="announceMessageNeedToKnow" placeholder="Need to know" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="announceMessageExtra">Full Body</label>
+          <br>
+          <textarea class="form-control" id="announceMessageExtra" placeholder="Full body" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <label for="announceAttach">Attach a file</label>
+          <input type="file" class="form-control" id="announceAttach">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="checkbox">
+	  <label>
+            <input type="checkbox" class="" id="announceVisible" value="1" checked="checked" />
+	    Published (visible)
+	  </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+          <button id="send-button" type="submit" class="btn btn-default btn-primary btn-md btn-block">Save</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<% content_for :page_specific_javascript do %>
+  <script>
+  $(document).ready(function() {
+
+    $('#announceMessageNeedToKnow').summernote({
+      height: 150
+    });
+
+    $('#announceMessageExtra').summernote({
+      height: 300
+    });
+
+    $('#send-button').click(function() {
+      if (!$('#announceAttach').val()) {
+        if (!$('#announceSubject').val() || !$('.priorityScore:checked').val() || !$('#announceMessageNeedToKnow').val() ) {
+          $('#bad-input-msg').removeClass('hide').slideDown().show();
+        } else {
+          var checkbox_value = "";
+          $('.categoriesChk:checkbox').each(function() {
+            if ($(this).is(':checked')) {
+              checkbox_value += $(this).val() + ",";
+            }
+          });
+          if (checkbox_value.length > 0) {
+            checkbox_value = checkbox_value.substring(0, checkbox_value.length - 1);
+          }
+
+          var needToKnow = $('#announceMessageNeedToKnow').summernote('code');
+          var extra = $('#announceMessageExtra').summernote('code');
+
+          $.ajax({
+            url: '/api/announcements',
+            data: { announcement: { subject: $('#announceSubject').val(), priority: $('.priorityScore:checked').val(), categories: checkbox_value, needToKnow: needToKnow, extra: extra, attach: "", author: $('#announceAuthor').val(), visible: $('#announceVisible:checked').val() }},
+            method: 'POST',
+            success: function (data) {
+              $('#success-msg').removeClass('hide').slideDown().show();
+            },
+            error: function (xhr, ajaxOp, error) {
+              $('#failure-msg').removeClass('hide').slideDown().show();
+            }
+          });
+        } 
+      } else {
+        fr = new FileReader();
+        file = $('#announceAttach')[0].files[0];
+        fr.onload = receivedText;
+        fr.readAsText(file);
+      } 
+    });
+
+    function receivedText() {
+      if (!$('#announceSubject').val() || !$('.priorityScore:checked').val() || !$('#announceMessageNeedToKnow').val() ) {
+          $('#bad-input-msg').removeClass('hide').slideDown().show();
+      } else {
+        var checkbox_value = "";
+        $('.categoriesChk:checkbox').each(function() {
+          if ($(this).is(':checked')) {
+            checkbox_value += $(this).val() + ",";
+          }
+        });
+        if (checkbox_value.length > 0) {
+          checkbox_value = checkbox_value.substring(0, checkbox_value.length - 1);
+        }
+
+        var needToKnow = $('#announceMessageNeedToKnow').summernote('code');
+        var extra = $('#announceMessageExtra').summernote('code');
+
+        $.ajax({
+          url: '/api/announcements',
+          data: { announcement: { subject: $('#announceSubject').val(), priority: $('.priorityScore:checked').val(), categories: checkbox_value, needToKnow: needToKnow, extra: extra, attach: fr.result, attach_type: $('#announceAttach')[0].files[0].type, attach_name: $('#announceAttach')[0].files[0].name, author: $('#announceAuthor').val(), visible: $('#announceVisible:checked').val(), } },
+          method: 'POST',
+          success: function (data) {
+            $('#success-msg').removeClass('hide').slideDown().show();
+          },
+          error: function (xhr, ajaxOp, error) {
+            $('#failure-msg').removeClass('hide').slideDown().show();
+          }
+        });
+      }
+    }
+  });
+  </script>
+<% end %>

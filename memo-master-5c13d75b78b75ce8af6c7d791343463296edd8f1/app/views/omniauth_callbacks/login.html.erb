@@ -1,0 +1,7 @@
+<h1 class='text-center'> Welcome! Click Below to Sign In</h1>
+<div class='text-center'>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%# link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), class: 'btn btn-primary btn-lg' %><br />
+ <%= link_to "Sign in", omniauth_authorize_path(resource_name, provider), class: 'btn btn-primary btn-lg' %><br />
+  <% end -%>
+</div>
